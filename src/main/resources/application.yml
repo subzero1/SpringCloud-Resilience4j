@@ -23,3 +23,18 @@ eureka:
   client:
      service-url:
       defaultZone: http://localhost:8761/eureka
+
+
+# "order"为断路器的名字
+#熔断器关闭时的缓冲区大小
+resilience4j:
+  circuitbreaker:
+    backends:
+      order:
+        ringBufferSizeInClosedState: 5 # 熔断器关闭时的缓冲区大小
+        ringBufferSizeInHalfOpenState: 3 # 熔断器半开时的缓冲区大小
+        waitDurationInOpenState: 5000 # 熔断器从打开到半开需要的时间
+        failure-rate-threshold: 60 # 熔断器打开的失败阈值
+        eventConsumerBufferSize: 10 # 事件缓冲区大小
+        registerHealthIndicator: true # 健康监测
+        automaticTransitionFromOpenToHalfOpenEnabled: false # 是否自动从打开到半开，不需要触发
